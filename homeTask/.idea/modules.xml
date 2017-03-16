@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/seleniumLearning.iml" filepath="$PROJECT_DIR$/.idea/modules/seleniumLearning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/seleniumLearning_main.iml" filepath="$PROJECT_DIR$/.idea/modules/seleniumLearning_main.iml" group="seleniumLearning" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/seleniumLearning_test.iml" filepath="$PROJECT_DIR$/.idea/modules/seleniumLearning_test.iml" group="seleniumLearning" />
+    </modules>
+  </component>
+</project>
