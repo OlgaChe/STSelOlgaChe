@@ -116,6 +116,7 @@ public class HomeWorkTen {
 
     @After
     public void stop() {
+
         driver.quit();
     }
 }
