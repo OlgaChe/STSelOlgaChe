@@ -6,7 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 /**
  * Created by olga on 06.04.17.
@@ -17,7 +22,13 @@ public class HomeWorkTen {
     public WebDriverWait wait;
 
     public boolean colorGrey (WebElement reg){
-        String[] rgb = reg.getCssValue("color").replace("rgba(", "").replace(")", "").split(", ");
+        String rgb[];
+        String rgbval = reg.getCssValue("color");
+        if (rgbval.startsWith("rgba")) {
+            rgb = rgbval.replace("rgba(", "").replace(")", "").split(", ");
+        } else {
+            rgb = rgbval.replace("rgb(", "").replace(")", "").split(", ");
+        }
         if (rgb[0].equals(rgb[1])&&rgb[0].equals(rgb[2])){
             return true;
         }else {
@@ -26,7 +37,13 @@ public class HomeWorkTen {
     }
 
     public boolean colorRed (WebElement sale){
-        String[] rgb = sale.getCssValue("color").replace("rgba(", "").replace(")", "").split(", ");
+        String rgb[];
+        String rgbval = sale.getCssValue("color");
+        if (rgbval.startsWith("rgba")) {
+            rgb = rgbval.replace("rgba(", "").replace(")", "").split(", ");
+        } else {
+            rgb = rgbval.replace("rgb(", "").replace(")", "").split(", ");
+        }
         if (rgb[1].equals("0")&&rgb[2].equals("0")){
             return true;
         }else {
@@ -38,7 +55,11 @@ public class HomeWorkTen {
 
     @Before
     public void start() {
-        driver = new ChromeDriver();
+
+        //driver = new ChromeDriver();
+        FirefoxOptions options = new FirefoxOptions().setLegacy(true);
+        driver = new FirefoxDriver(options);
+        //driver = new InternetExplorerDriver();
         wait = new WebDriverWait(driver, 10);
     }
 
@@ -54,18 +75,9 @@ public class HomeWorkTen {
         String priceSaleValExp = priceSaleExp.getText();
         String priceRegValExp = priceRegExp.getText();
 
-        System.out.println(priceRegValExp + priceSaleValExp);
-        System.out.println(priceRegExp.getCssValue("color"));
-        System.out.println(Float.parseFloat(priceRegExp.getCssValue("font-size").replace("px", "")));
-        System.out.println(priceRegExp.getCssValue("font-weight"));
-        System.out.println(priceSaleExp.getCssValue("color"));
-        System.out.println(Float.parseFloat(priceSaleExp.getCssValue("font-size").replace("px", "")));
-        System.out.println(priceSaleExp.getCssValue("font-weight"));
-        System.out.println(priceRegExp.getTagName());
-        System.out.println(priceSaleExp.getTagName());
-
         ///Assert that regular price font is crossed and sale price font is bold
-        Assert.assertTrue(priceRegExp.getTagName().equals("s")&&priceSaleExp.getCssValue("font-weight").equals("bold"));
+        Assert.assertTrue(priceRegExp.getTagName().equals("s")&&priceSaleExp.getTagName().equals("strong"));
+        System.out.println(priceRegExp.getCssValue("color"));
 
         ///Assert that regular price font is smaller than sale one
         Assert.assertTrue(Float.parseFloat(priceRegExp.getCssValue("font-size").replace("px", "")) < Float.parseFloat(priceSaleExp.getCssValue("font-size").replace("px", "")));
@@ -79,21 +91,13 @@ public class HomeWorkTen {
         ///Navigate to product page
         driver.findElement(By.xpath(".//*[@id='box-campaigns']/div/ul/li")).click();
 
-        ///Get home page values
-        WebElement priceSaleAct = driver.findElement(By.xpath(".//*[@id='box-product']/div[contains(@class, 'content')]/div[contains(@class, 'information')]/div[contains(@class, 'price-wrapper')]/*[@class='campaign-price']"));
-        WebElement priceRegAct = driver.findElement(By.xpath(".//*[@id='box-product']/div[contains(@class, 'content')]/div[contains(@class, 'information')]/div[contains(@class, 'price-wrapper')]/*[@class='regular-price']"));
+        ///Get product page values
+        WebElement priceSaleAct = driver.findElement(By.cssSelector(".campaign-price"));
+        WebElement priceRegAct = driver.findElement(By.cssSelector(".regular-price"));
 
-        String nameAct = driver.findElement(By.xpath(".//*[@id='box-product']/div/h1")).getText();
+        String nameAct = driver.findElement(By.cssSelector("#box-product>div>h1")).getText();
         String priceSaleValAct = priceSaleAct.getText();
         String priceRegValAct = priceRegAct.getText();
-
-        System.out.println(priceRegValAct + priceSaleValAct);
-        System.out.println(priceRegAct.getCssValue("color"));
-        System.out.println(Float.parseFloat(priceRegAct.getCssValue("font-size").replace("px", "")));
-        System.out.println(priceRegAct.getCssValue("font-weight"));
-        System.out.println(priceSaleAct.getCssValue("color"));
-        System.out.println(Float.parseFloat(priceSaleAct.getCssValue("font-size").replace("px", "")));
-        System.out.println(priceSaleAct.getCssValue("font-weight"));
 
         ///Assert names are same
         Assert.assertTrue(nameExp.equals(nameAct));
@@ -102,7 +106,7 @@ public class HomeWorkTen {
         Assert.assertTrue(priceRegValExp.equals(priceRegValAct)&&priceSaleValExp.equals(priceSaleValAct));
 
         ///Assert that regular price font is crossed and sale price font is bold
-        Assert.assertTrue(priceRegAct.getTagName().equals("s")&&priceSaleAct.getCssValue("font-weight").equals("bold"));
+        Assert.assertTrue(priceRegAct.getTagName().equals("s")&&priceSaleAct.getTagName().equals("strong"));
 
         ///Assert that regular price font is smaller than sale one
         Assert.assertTrue(Float.parseFloat(priceRegAct.getCssValue("font-size").replace("px", "")) < Float.parseFloat(priceSaleAct.getCssValue("font-size").replace("px", "")));
