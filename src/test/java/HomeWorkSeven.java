@@ -21,7 +21,8 @@ public class HomeWorkSeven extends MainMethod {
         for(int i=0; i < listSize.size(); i++)
         {
             List<WebElement> elements = driver.findElements(By.id("app-"));
-            elements.get(i).click();            List<WebElement> subListSize = driver.findElements(By.xpath(".//*[@id='app-']/ul/li"));
+            elements.get(i).click();
+            List<WebElement> subListSize = driver.findElements(By.xpath(".//*[@id='app-']/ul/li"));
             for (int k = 0; k < subListSize.size(); k++) {
                 List<WebElement> subElements = driver.findElements(By.xpath(".//*[@id='app-']/ul/li"));
                 subElements.get(k).click();
