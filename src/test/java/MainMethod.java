@@ -16,7 +16,9 @@ public class MainMethod {
 
     @Before
     public void start() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("start-maximized");
+        driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, 10);
     }
 
