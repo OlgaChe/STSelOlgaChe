@@ -70,8 +70,5 @@ public class HomeworkThirteen extends MainMethod {
             wait.until(stalenessOf(driver.findElement(By.xpath(".//*[@id='order_confirmation-wrapper']/table/tbody/tr/td[contains(text(),'"+ productName + "')]"))));
 
         }
-
     }
-
-
 }
